@@ -1,0 +1,93 @@
+<html data-theme="light">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="apple-touch-icon" sizes="180x180" href="favicon_io/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="192x192" href="favicon_io/android-chrome-192x192.png">
+        <link rel="icon" type="image/png" sizes="512x512" href="favicon_io/android-chrome-512x512.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="favicon_io/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="favicon_io/favicon-16x16.png">
+        <!-- <link rel="manifest" href="favicon_io/site.webmanifest"> -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+            integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet" href="index.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&display=swap" rel="stylesheet">
+        <title>Countries Quiz</title>
+    </head>
+    <body>
+        <header>
+            <h1 id="title">Countries of the World Quiz</h1>
+            <nav id="navigation-group">
+                <div id="choices-group">
+                    <button class="choice" id="world" data-continent="all">World</button>
+                    <button class="choice" id="africa" data-continent="africa">Africa</button>
+                    <button class="choice" id="americas" data-continent="americas">Americas</button>
+                    <button class="choice" id="asia" data-continent="asia">Asia</button>
+                    <button class="choice" id="europe" data-continent="europe">Europe</button>
+                    <button class="choice" id="oceania" data-continent="oceania">Oceania</button>
+                    <button class="choice" id="antarctic" data-continent="antarctic">Antarctic</button>
+                </div>
+    
+                <div id="start-group">
+                    <div class="start" id="status">Change Status</div>
+                    <button class="start" id="status-change">All Countries</button>
+                    <button class="start" id="start-btn">Start</button>
+                    <div class="start" id="quiz-progress">
+                        <span id="current">0</span> / <span id="total">0</span>
+                    </div>
+                </div>
+            </nav>
+        </header>
+        <main>
+            <div id="instruction">
+                <h2 id="instr-title">How To Play</h2>
+                <ol id="instr-desc">
+                    <li>Select a continent (default: World), then change the 'independent' status (default: All Countries) and then click the 'start' button to begin the quiz.</li>
+                    <li>Refer to the flag and relevant information of each country provided during the quiz.</li>
+                    <li>Go to the input field and type the answer, and then click the 'next' button to submit the answer.</li>
+                    <li>Check your progress at the top of the site, and continue on answering until the end to see how well you did.</li>
+                </ol>
+            </div>
+            
+            <div id="quiz-area">
+                <div id="message-area"></div>
+                <div id="answer-area">
+                    <textarea
+                        id="answer-text"
+                        placeholder="Type your answer here and click next to submit"></textarea>
+                    <button id="answer-submit">Next</button>
+                </div>
+        
+                <div id="information">
+                    <div id="flag-container">
+                        <img src="" id="flag" alt="No image available">
+                    </div>
+    
+                    <div id="capital-info" class="info-container">
+                        <h2>Capital(s)</h2>
+                        <p id="capital"></p>
+                    </div>
+    
+                    <div id="language-info" class="info-container">
+                        <h2>Official Language(s)</h2>
+                        <p id="language"></p>
+                    </div>
+    
+                    <div id="subregion-info" class="info-container">
+                        <h2>Subregion(s)</h2>
+                        <p id="subregion"></p>
+                    </div>
+    
+                    <div id="border-info" class="info-container">
+                        <h2>Land Border(s)</h2>
+                        <p id="border"></p>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <script src="index.js" type="module"></script>
+    </body>
+</html>
