@@ -120,7 +120,7 @@ function isCountryEqual(country, str) {
         // to return unicode by replacing diacritics, empty space, parenthesis
         return string.toUpperCase()
         .normalize('NFD')
-        .replaceAll(/[\u0300-\u036f]|[\s]|[()]|[-]/g, '')
+        .replaceAll(/[\u0300-\u036f]|[\s]|[()]|[-]|[']/g, '')
     }
 
     // to return true if user's input matches the common, official
