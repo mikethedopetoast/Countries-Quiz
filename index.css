@@ -7,16 +7,19 @@
 }
 
 :root {
-    --china-rose: rgb(143, 85, 103);
     --space-cadet: rgb(46, 41, 78);
-    --tiffany-blue: rgb(104, 216, 214);
     --peach-yellow: rgb(242, 211, 152);
     --eminence: rgb(126, 46, 132);
+    --mint-green: rgb(203, 243, 240);
+    --light-sea-green: rgb(46, 196, 182);
     --light-green: rgb(178, 255, 168);
+    --orange: rgb(255, 159, 28);
+    --china-rose: rgb(143, 85, 103);
     --white: rgb(255, 255, 255);
     --grey: rgb(128, 128, 128);
-    --box-shadow: 5px 5px 5px var(--space-cadet);
+    --box-shadow: 0px 0px 5px var(--space-cadet);
     --font-family: "Inter", serif;
+    --all-transition: all .7s ease-out;
 }
 
 /* Layout */
@@ -28,7 +31,7 @@ html {
 body {
     width: 60em;
     margin: auto;
-    background-color: var(--tiffany-blue);
+    background-color: var(--mint-green);
     font-family: var(--font-family);
     padding-bottom: 2em;
 }
@@ -52,24 +55,23 @@ main {
 /* Title */
 
 #title {
-    color: var(--tiffany-blue);
+    color: var(--mint-green);
     background-color: var(--space-cadet);
     width: 100%;
-    font-size: 2.2rem;
+    font-size: 2rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: .2rem;
     padding: .5em 1em;
-    border-radius: 30px;
+    border-radius: 12px;
     margin: 1em 0;
 }
 
-.chosen-type {
+#chosen-type {
     color: var(--peach-yellow);
 }
 
-.score {
-    display: block;
+#score {
     color: var(--light-green);
 }
 
@@ -83,19 +85,32 @@ main {
     padding: .5em;
 }
 
-#choices-group {
-    display: flex;
-    justify-content: space-between;
-    background-color: var(--china-rose);
-    padding: .5em;
-    border-radius: 10px;
-    margin-bottom: .5em;
+#nav-min {
+    color: var(--eminence);
+    font-size: 1rem;
+    letter-spacing: .1rem;
+    border-radius: 5px;
 }
 
+#choices-group {
+    margin: .5em 0;
+    height: auto;
+    opacity: 1;
+    transition: height, opacity 1.5s ease-out;
+    transition-behavior: allow-discrete;
+}
+
+#choices-group.invisible {
+    margin-bottom: 0;
+    height: 0;
+    opacity: 0;
+}
+
+#choices-group,
 #start-group {
     display: flex;
-    justify-content: center;
-    border-radius: 10px;
+    justify-content: space-between;
+    gap: .4em;
     overflow: hidden;
 }
 
@@ -111,50 +126,47 @@ main {
     letter-spacing: .1rem;
 }
 
-#status {
-    width: 12em;
-    font-size: 1.3rem;
-}
-
-#status-change {
-    width: 15em;
-}
-
-#start-btn {
-    background-color: var(--eminence);
-}
-
-#start-btn,
-#quiz-progress {
-    width: 5em;
+#instr-btn {
+    width: 25%;
     font-size: 1.8rem;
 }
 
-#status,
-#quiz-progress {
-    background-color: var(--space-cadet);
-}
-
-.choice,
-.start {
-    color: var(--white);
-    border: none;
-}
-
-.choice,
 #status-change {
-    background-color: var(--china-rose);
-    font-size: 1.3rem;
-    text-transform: uppercase;
-    padding: .5em;
+    width: 35%;
+    font-size: 1.5rem;
 }
 
-.choice:hover,
-#status-change:hover,
-#start-btn:hover {
+#start-btn {
+    background-color: var(--china-rose);
+}
+
+.choice {
+    border: solid 2px var(--space-cadet);
+    border-radius: 12px;
+    font-size: 1.2rem;
+}
+
+.choice.selected {
     color: var(--peach-yellow);
     background-color: var(--space-cadet);
-    cursor: pointer;
+}
+
+.start {
+    width: 20%;
+    color: var(--white);
+    background-color: var(--light-sea-green);
+    border: solid 2px var(--space-cadet);
+    border-radius: 12px;
+    font-size: 1.8rem;
+}
+
+#status-change,
+.choice {
+    color: var(--space-cadet);
+    background-color: var(--orange);
+    text-transform: uppercase;
+    font-weight: 700;
+    padding: .5em;
 }
 
 /* Instruction */
@@ -162,27 +174,25 @@ main {
 #instruction {
     width: 100%;
     display: block;
-    margin-top: 2.5em;
+    margin-top: 2em;
+}
+
+#instruction.hidden {
+    display: none;
 }
 
 #instr-title {
-    color: var(--tiffany-blue);
-    background-color: var(--space-cadet);
-    width: 50%;
-    transform: translateX(50%);
+    color: var(--space-cadet);
     font-size: 2rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: .2rem;
     text-align: center;
-    padding: .5em 1em;
-    border-radius: 30px;    
 }
 
 #instr-desc {
     font-size: 1rem;
     line-height: 2;
-    margin-top: 2em;
 }
 
 #instr-desc > li {
@@ -203,37 +213,47 @@ main {
     display: none;
 }
 
+#quiz-area.active {
+    display: block;
+}
+
 #message-area {
     display: flex;
     flex-direction: column;
     align-items: center;
-    color: var(--china-rose);
+    color: var(--eminence);
     margin-bottom: 1em;
     letter-spacing: .1rem;
 }
 
-.message,
-.message-title {
+#message,
+#message-title {
     font-weight: 700;
-    /* text-transform: uppercase; */
 }
 
-.country-names {
+#country-names {
     color: var(--space-cadet);
     font-weight: 700;
 }
 
 #answer-area {
+    display: flex;
     width: 100%;
     height: 4em;
+    box-shadow: var(--box-shadow);
+    border-radius: 10px;
+}
+
+#answer-area.hidden {
+    display: none;
 }
 
 #answer-text {
     width: 80%;
     height: 100%;
     resize: none;
-    color: var(--white);
-    background-color: var(--space-cadet);
+    color: var(--space-cadet);
+    background-color: var(--white);
     font-family: var(--font-family);
     font-size: 1.5rem;
     border: none;
@@ -249,18 +269,12 @@ main {
 #answer-submit {
     width: 20%;
     color: var(--white);
-    background-color: var(--eminence);
+    background-color: var(--light-sea-green);
     font-size: 1.8rem;
     font-weight: 500;
     letter-spacing: .1rem;
     border: none;
     border-radius: 0 10px 10px 0;
-}
-
-#answer-submit:hover {
-    color: var(--peach-yellow);
-    background-color: var(--space-cadet);
-    cursor: pointer;
 }
 
 /* Information Area */
@@ -303,7 +317,7 @@ main {
 
 #information h2 {
     color: var(--white);
-    background: var(--china-rose);
+    background: var(--orange);
     font-size: 1.3rem;
     text-transform: uppercase;
     letter-spacing: .1rem;
@@ -347,40 +361,31 @@ main {
     }
 
     #title {
-        font-size: 1.4rem;
+        font-size: 1.2rem;
     }
 
     #choices-group {
         flex-wrap: wrap;
         justify-self: center;
-        justify-content: space-evenly;
-        column-gap: 2em;
-        margin-bottom: .8em;
+        justify-content: center;
+        gap: .5em;
+        margin-bottom: .6em;
     }
 
-    #start-group {
-        flex-wrap: wrap;
-        justify-content: center;
-        row-gap: .5em;
+    .choice {
+        font-size: 1.6rem;
     }
     
-    #status {
-        width: 40%;
-    }
-    
+    #instr-btn,
     #status-change {
-        width: 60%;
+        font-size: 1.2rem;
     }
-    
-    #start-btn,
-    #quiz-progress {
-        width: 100%;
-        height: 1.4em;
+
+    .start {
+        font-size: 1.4rem;
     }
 
     #instr-title {
-        width: 100%;
-        transform: translateX(0);
         font-size: 1.4rem;
     }
 
@@ -407,5 +412,30 @@ main {
     .info-container {
         width: 100%;
         margin-top: 1.5em;
+    }
+}
+
+@media (hover: hover) {
+    #nav-min:hover {
+        color: var(--space-cadet);
+        font-size: 1.1rem;
+        cursor: pointer;
+        transition: var(--all-transition);
+    }
+
+    #instr-btn:hover,
+    #status-change:hover,
+    #start-btn:hover,
+    .choice:hover {
+        color: var(--peach-yellow) !important;
+        background-color: var(--space-cadet) !important;
+        cursor: pointer;
+        transition: var(--all-transition) !important;
+    }
+
+    #answer-submit:hover {
+        color: var(--peach-yellow);
+        background-color: var(--space-cadet);
+        cursor: pointer;
     }
 }

@@ -4,8 +4,12 @@
 
 const elements = {
     title: document.getElementById('title'),
-    choices: document.getElementsByClassName('choice'),
+    navigation: document.getElementById('navigation-group'),
+    navMin: document.getElementById('nav-min'),
+    choicesGroup: document.getElementById('choices-group'),
+    choice: document.getElementsByClassName('choice'),
     start: document.getElementById('start-btn'),
+    instr: document.getElementById('instr-btn'),
     statusChange: document.getElementById('status-change'),
     quizCurrent: document.getElementById('current'),
     quizTotal: document.getElementById('total'),
@@ -22,6 +26,15 @@ const elements = {
     border: document.getElementById('border'),
 }
 
+// ---Set navigation bar---
+
+elements.navMin.addEventListener('click', () => {
+    elements.choicesGroup.classList.toggle('invisible');
+    elements.choicesGroup.classList.contains('invisible') ?
+    elements.navMin.textContent = 'Click to Show Continents' :
+    elements.navMin.textContent = 'Click to Hide Continents'
+})
+
 // ---Set quiz defaults---
 
 const forQuiz = {
@@ -33,16 +46,12 @@ const forQuiz = {
 
 // ---Set 'continent' selection---
 
-for (let button of elements.choices) {
-    button.addEventListener('click', (e) => {
-        // set default styles for unselected buttons
-        for (let button of elements.choices) {
-            button.style.color = 'rgb(255, 255, 255)';
-            button.style.backgroundColor = 'rgb(143, 85, 103)';
+for (let choice of elements.choice) {
+    choice.addEventListener('click', (e) => {
+        // set styles for selected button and removed when the other button is selected
+        for (let other of elements.choice) {
+            other.classList.toggle('selected', other === choice && undefined)
         }
-        // set styles for the selected button
-        e.target.style.color = 'rgb(242, 211, 152)';
-        e.target.style.backgroundColor = 'rgb(46, 41, 78)';
         // set quiz type based on selected continent
         forQuiz.type = e.target.dataset.continent;
     })
@@ -51,9 +60,9 @@ for (let button of elements.choices) {
 // ---Toggle 'All Countries' to change status---
 
 elements.statusChange.addEventListener('click', (e) => {
-    e.target.textContent === 'All Countries' ? e.target.textContent = 'Independent'
-    : e.target.textContent === 'Independent' ?  e.target.textContent = 'Not Independent'
-    : e.target.textContent = 'All Countries'
+    e.target.textContent === 'Independent' ? e.target.textContent = 'Dependent'
+    : e.target.textContent === 'Dependent' ?  e.target.textContent = 'Combined'
+    : e.target.textContent = 'Independent'
 })
 
 // ---Set the start button based on 'continent' and 'status' selections---
@@ -74,8 +83,8 @@ elements.start.addEventListener('click', async () => {
         // to filter countries independent status
         const jsonResponseFiltered = (await response.json()).filter(
             country => 
-                elements.statusChange.textContent === 'All Countries' ? country
-                : elements.statusChange.textContent === 'Independent' ? country.independent 
+                elements.statusChange.textContent === 'Independent' ? country.independent
+                : elements.statusChange.textContent === 'Combined' ? country
                 : !country.independent
             );
         // to generate countries in random order
@@ -85,9 +94,9 @@ elements.start.addEventListener('click', async () => {
         elements.answerSubmit.addEventListener('click', toNext);
         document.body.addEventListener('keydown', enterToNext);
         // set changes to 'Title' and 'Answer Area'
-        elements.answerArea.style.display = 'flex';
+        elements.answerArea.classList.remove('hidden');
         elements.title.innerHTML = `
-            The <span class='chosen-type'>${quizType}</span> Quiz Started`;
+            The <span id='chosen-type'>${quizType}</span> Quiz Started`;
         elements.quizTotal.innerText = forQuiz.countries.length;
 
         toRestart();
@@ -102,16 +111,25 @@ elements.start.addEventListener('click', async () => {
 
 function toRestart() {
     // 'Start' becomes 'Restart'
-    elements.start.innerText = 'Restart';
+    elements.start.textContent = 'Restart';
     // instruction is hidden when the button is clicked
-    elements.instruction.style.display = 'none';
+    elements.instruction.classList.add('hidden');
     // quiz area shows up after disabling instruction
-    elements.quizArea.style.display = 'block';
+    elements.quizArea.classList.add('active');
     // reset the current index to 0
     elements.quizCurrent.innerText = forQuiz.current;
     // reset the message area
     elements.messageArea.innerHTML = ''
 }
+
+// ---Set instruction page---
+
+elements.instr.addEventListener('click', () => {
+    elements.start.textContent = 'Start';
+    elements.instruction.classList.remove('hidden');
+    elements.quizArea.classList.remove('active');
+    [elements.quizCurrent.innerText, elements.quizTotal.innerText] = Array(2).fill('0');
+})
 
 // ---Modify answers---
 
@@ -140,18 +158,18 @@ function setInfo() {
     // to check if no country is available for the quiz, e.g, 'Antarctica' does not contain 'Independent'
     if (!forQuiz.countries || forQuiz.countries.length === 0) {
         console.error('No countries data loaded or empty countries array.');
-        elements.messageArea.innerHTML = `<p class='message'>Ops! No country is available for this category.</p>`;
+        elements.messageArea.innerHTML = `<p id='message'>Ops! No country is available for this category.</p>`;
         [elements.flag.src, elements.capital.innerText, elements.language.innerText, elements.subregion.innerText, elements.border.innerText] = Array(5).fill('-');
         return;
     // else if current country exceeds the total countries
     } else if (forQuiz.current < 0 || forQuiz.current >= forQuiz.countries.length) {
         console.error('Invalid current country index:', forQuiz.current);
-        elements.messageArea.innerHTML = `<p class='message'>Quiz has ended.</p>`
+        elements.messageArea.innerHTML = `<p id='message'>Quiz has ended.</p>`
         forQuiz.current = 0;
     // else if current country is undefined
     } else if (!curCountry) {
         console.error('Country data is undefined at index', forQuiz.current);
-        elements.messageArea.innerHTML = `<p class='message'>Ops! No country is available.</p>`
+        elements.messageArea.innerHTML = `<p id='message'>Ops! No country is available.</p>`
         return;
     }
     
@@ -176,13 +194,13 @@ function toNext() {
     // to check if the submitted answer aligns with the common, official or alternative names
     if (isCountryEqual(curCountry, elements.answerText.value)) {
         forQuiz.points++;
-        elements.messageArea.innerHTML = `<p class='message'>Well done, you got it right!</p>`;
+        elements.messageArea.innerHTML = `<p id='message'>Well done, you got it right!</p>`;
     } else {
         forQuiz.points;
         // to display official name only if it does not equal to its common name
         elements.messageArea.innerHTML = `
-            <p class='message-title'>Oh No! These are the correct answers: </p>
-            <p class='country-names'>${curCountry.name.common}, ${sameName} ${curCountry.altSpellings[0]}</p>`;
+            <p id='message-title'>Oh No! These are the correct answers: </p>
+            <p id='country-names'>${curCountry.name.common}, ${sameName} ${curCountry.altSpellings[0]}</p>`;
     }
 
     forQuiz.current++;
@@ -202,13 +220,13 @@ function toNext() {
         // to remove the answer area and its functionality
         elements.answerSubmit.removeEventListener('click', toNext);
         document.body.removeEventListener('keydown', enterToNext);
-        elements.answerArea.style.display = 'none';
+        elements.answerArea.classList.add('hidden');
         elements.title.innerHTML = `
-            The <span class='chosen-type'>${quizType}</span> Quiz Completed: <span class='score'>${score} = ${percent}%</span>`;
+            The <span id='chosen-type'>${quizType}</span> Quiz Ended: <span id='score'>${score} = ${percent}%</span>`;
     } else {
-        elements.answerArea.style.display = 'flex';
+        elements.answerArea.classList.remove('hidden');
         elements.title.innerHTML = `
-            The <span class='chosen-type'>${quizType}</span> Quiz: <span class='score'>${score} = ${percent}%</span>`;
+            The <span id='chosen-type'>${quizType}</span> Quiz: <span id='score'>${score} = ${percent}%</span>`;
     }
     
     // to display the next set of information synchronously when the message is removed
