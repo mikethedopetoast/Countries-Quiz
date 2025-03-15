@@ -3,7 +3,7 @@
 This project is deployed at the [link here.](https://countriesquizbymtdt.netlify.app/)
 
 ### Project Overview
-How many countries can you name? Countries Quiz is a fun geography trivia quiz app. To begin the quiz, a player can select a continent (default: World) and change the 'Independent' status. Flag and information of each country are retrieved from the REST Countries API, and questions are generated randomly for each round. Players can validate their answers and play as many times as they want. If you like Geography, this is the right game for you! 😉
+How many countries can you name? Countries Quiz is a fun geography trivia game. To begin the quiz, a player can select a continent (default: World) and change the 'Independent' status. Flag and information of each country are retrieved from the REST Countries API, and questions are generated randomly for each round. Players can validate their answers and play as many times as they want. If you like Geography, this is the right game for you! 😉
 
 ### Project Highlights
 To remove any accents found in the input string (answer area), the **normalize()** method with its 'NFD' parameter assured the conversion of the string to a normalized Unicode format, deliberately turning the user's input accent-insensitive.
@@ -16,7 +16,7 @@ function isCountryEqual(country, str) {
     const toModify = (string) => {
         return string.toUpperCase()
         .normalize('NFD')
-        .replaceAll(/[\u0300-\u036f]|[\s]|[()]|[-]|[']/g, '')
+        .replaceAll(/[\u0300-\u036f]|[\s]|[()]|[-]|['], '')
     }
 ...
 ```
