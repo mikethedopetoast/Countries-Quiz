@@ -31,6 +31,22 @@ When a user's input matches the common, official, or at least one of the alterna
 }
 ```
 
+When the user clicks any of the continents (elements.choice), the style would change for the selected button.
+
+To remove the style when the other button is selected, iterate all buttons with **for...of**, using **classList.toggle()** to retrieve the 'selected' class on click. The 'other' indicates the non-selected buttons, and its second parameter determines whether the class is included. In this case, it would pick up the 'selected' class only if the 'other' strictly equals both clicked (choice) and didn't have the class yet (undefined).
+```
+for (let choice of elements.choice) {
+    choice.addEventListener('click', (e) => {
+        for (let other of elements.choice) {
+            other.classList.toggle('selected', other === choice && undefined)
+        }
+        forQuiz.type = e.target.dataset.continent;
+    })
+}
+```
+
 ### Resources
-[Remove Accents by Github user: Chalarangelo](https://github.com/Chalarangelo/30-seconds-of-code/blob/master/content/snippets/js/s/remove-accents.md)
+- [Remove Accents by Github user: Chalarangelo](https://github.com/Chalarangelo/30-seconds-of-code/blob/master/content/snippets/js/s/remove-accents.md)
+- [DOMTokenList: toggle() method by MDN](https://developer.mozilla.org/en-US/docs/Web/API/DOMTokenList/toggle)
+- [Remove Class when another button with same class is clicked by Stackoverflow user: trincot](https://stackoverflow.com/a/75705538/20055605)
 
