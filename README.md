@@ -35,7 +35,7 @@ When a user's input matches the common, official, or at least one of the alterna
 ### Style changes for selected and unselected buttons
 When the user clicks any of the continents (elements.choice), the style would change for the selected button.
 
-To remove the style when the other button is selected, iterate all buttons with **for...of**, using **classList.toggle()** to retrieve the 'selected' class on click. The 'other' indicates the non-selected buttons, and its second parameter determines whether the class is included. In this case, it would pick up the 'selected' class only if the 'other' strictly equals both clicked (choice) and didn't have the class yet (undefined).
+To remove the style when the other button is selected, iterate all buttons with **for...of**. The 'other' here indicates the non-selected buttons. Use **classList.toggle()** to retrieve the 'selected' class when clicking, and its second parameter determines whether the class is included. In this case, it would pick up the 'selected' class only if the 'other' strictly equals both clicked (choice) and didn't have the class yet (undefined).
 ```
 for (let choice of elements.choice) {
     choice.addEventListener('click', (e) => {
@@ -48,8 +48,10 @@ for (let choice of elements.choice) {
 ```
 
 ### Retrieving country's information without error
-Three conditions we need to check when setting up the country's information.
-- No country is available for the quiz, the current country exceeds the total countries, and the current country is undefined.
+Three conditions to check when setting up the country's information.
+- No country is available for the quiz
+- The current country exceeds the total countries (quiz ends)
+- The current country is undefined.
 ```
 if (!forQuiz.countries || forQuiz.countries.length === 0) {
     console.error('No countries data loaded or empty countries array.');
