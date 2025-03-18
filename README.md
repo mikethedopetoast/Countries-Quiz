@@ -48,7 +48,7 @@ for (let choice of elements.choice) {
 ```
 
 ### Retrieving country's information without error
-Three conditions to check when setting up the country's information.
+There are three conditions to check when setting up the country's information.
 - No country is available for the quiz
 - The current country exceeds the total countries (quiz ends)
 - The current country is undefined.
@@ -76,7 +76,29 @@ function setInfo() {
 }
 ```
 
-### Resources
+## Screenshots (Desktop Site)
+<img src="https://github.com/user-attachments/assets/95df8f13-ff71-4f97-96cc-d0e3d497a40e" width="700" /></br>
+Instructions will be displayed before users click on anything on the site.
+
+<img src="https://github.com/user-attachments/assets/9779aa9e-1a71-4e21-b4c9-9fb173f4431d" width="700" /></br>
+The gameplay. Users submit their answers through the text box and proceed.
+
+<img src="https://github.com/user-attachments/assets/656415fc-e1c3-40ee-b17c-9f42d1d38c16" width="700" /></br>
+Wrong input. When the user's answer does not correspond to the modified names, correct answers will be shown instead.
+
+<img src="https://github.com/user-attachments/assets/1e843cf1-8811-495e-94ef-ba04fd373c2d" width="700" /></br>
+Layout flexibility. Users can toggle to show or hide the continents panel.
+
+<img src="https://github.com/user-attachments/assets/8ca2cab6-68e6-4d1c-9cb5-202e3bcc59f6" width="700" /></br>
+'is its own capital' displays when the country has the same name as its capital city.
+
+<img src="https://github.com/user-attachments/assets/21ec4285-0292-4968-92a7-e5ee2855ecd2" width="700" /></br>
+Missing data. All information displays correctly even when the dependent territory doesn't have a capital city.
+
+<img src="https://github.com/user-attachments/assets/fb4f05f7-fd85-4491-b8fc-90f575a08255" width="700" /></br>
+No country is available for this specific category.
+
+## Resources
 - [Remove Accents by Github user: Chalarangelo](https://github.com/Chalarangelo/30-seconds-of-code/blob/master/content/snippets/js/s/remove-accents.md)
 - [DOMTokenList: toggle() method by MDN](https://developer.mozilla.org/en-US/docs/Web/API/DOMTokenList/toggle)
 - [Remove Class when another button with same class is clicked by Stackoverflow user: trincot](https://stackoverflow.com/a/75705538/20055605)
